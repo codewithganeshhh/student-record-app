@@ -382,7 +382,7 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
                 boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
                 borderRadius: '4px',
                 overflow: 'hidden',
-                color: '#0f2d4a',
+                color: '#000000',
                 fontFamily: '"Montserrat", "Arial", sans-serif'
               }}
             >
@@ -488,7 +488,7 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
                 backgroundImage: 'url("/certificate-template.png")',
                 backgroundSize: '100% 100%',
                 backgroundRepeat: 'no-repeat',
-                color: '#0f2d4a',
+                color: '#000000',
                 fontFamily: '"Montserrat", "Arial", sans-serif'
               }}
             >
