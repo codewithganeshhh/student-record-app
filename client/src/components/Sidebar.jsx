@@ -44,15 +44,25 @@ export default function Sidebar({ user, onLogout, isOpen, onClose, darkMode, onT
       </button>
 
       <div style={{ marginBottom: '3rem' }}>
-        <img 
-          src="/logo.png" 
-          alt="PaulTech Software Services" 
-          style={{ 
-            maxWidth: '100%', 
-            height: 'auto', 
-            display: 'block'
-          }} 
-        />
+        <div style={{ 
+          background: '#ffffff', 
+          padding: '0.75rem 1rem', 
+          borderRadius: 'var(--radius-md)',
+          boxShadow: 'var(--shadow-sm)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <img 
+            src="/logo.png" 
+            alt="PaulTech Software Services" 
+            style={{ 
+              maxWidth: '100%', 
+              height: 'auto', 
+              display: 'block'
+            }} 
+          />
+        </div>
         <div className="badge badge-domain" style={{ marginTop: '0.75rem', textTransform: 'none' }}>
           {user.role === 'ADMIN' ? 'Mrs. Daljeet Paul' : user.role}
         </div>
