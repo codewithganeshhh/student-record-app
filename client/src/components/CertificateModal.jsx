@@ -98,6 +98,7 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
   const [activeTab, setActiveTab] = useState('name');
 
   const certificateRef = useRef(null);
+  const printRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -127,16 +128,16 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
   };
 
   const downloadPDF = async () => {
-    if (!certificateRef.current) return;
+    if (!printRef.current) return;
     setLoading(true);
 
     try {
       // First save details to database
       await saveCertificateDetails();
 
-      // Render certificate element to canvas
-      const canvas = await html2canvas(certificateRef.current, {
-        scale: 2.5, // High resolution scale for printing
+      // Render high-resolution certificate element to canvas
+      const canvas = await html2canvas(printRef.current, {
+        scale: 2.0, // High-resolution scale on top of native 1537x1183 element
         useCORS: true,
         allowTaint: true,
         backgroundColor: null
@@ -474,6 +475,109 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
             <p style={{ marginTop: '0.8rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               Live certificate layout preview. Drag sliders to adjust text positioning to perfectly align with lines.
             </p>
+
+            {/* Hidden High-Resolution Certificate for Export */}
+            <div 
+              ref={printRef}
+              style={{
+                position: 'absolute',
+                left: '-9999px',
+                top: '-9999px',
+                width: '1537px',
+                height: '1183px',
+                backgroundImage: 'url("/certificate-template.png")',
+                backgroundSize: '100% 100%',
+                backgroundRepeat: 'no-repeat',
+                color: '#0f2d4a',
+                fontFamily: '"Montserrat", "Arial", sans-serif'
+              }}
+            >
+              {/* Student Name */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: `${positions.nameTop}%`,
+                  left: 0,
+                  width: '100%',
+                  textAlign: 'center',
+                  fontWeight: '800',
+                  fontSize: `${positions.nameFontSize * (1537 / 650)}px`,
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  pointerEvents: 'none'
+                }}
+              >
+                {student.name}
+              </div>
+
+              {/* Domain */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: `${positions.domainTop}%`,
+                  left: `${positions.domainLeft}%`,
+                  width: `${positions.domainWidth}%`,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: `${positions.domainFontSize * (1537 / 650)}px`,
+                  letterSpacing: '1px',
+                  textTransform: 'uppercase',
+                  pointerEvents: 'none'
+                }}
+              >
+                {student.domain}
+              </div>
+
+              {/* Dates */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: `${positions.datesTop}%`,
+                  left: `${positions.datesLeft}%`,
+                  width: `${positions.datesWidth}%`,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: `${positions.datesFontSize * (1537 / 650)}px`,
+                  pointerEvents: 'none'
+                }}
+              >
+                {formatDateString(formData.startDate)} – {formatDateString(formData.endDate)}
+              </div>
+
+              {/* Certificate Number */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: `${positions.certNoTop}%`,
+                  left: `${positions.certNoLeft}%`,
+                  width: `${positions.certNoWidth}%`,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: `${positions.certNoFontSize * (1537 / 650)}px`,
+                  letterSpacing: '1px',
+                  pointerEvents: 'none'
+                }}
+              >
+                {formData.certificateNo}
+              </div>
+
+              {/* Issue Date */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: `${positions.issueDateTop}%`,
+                  left: `${positions.issueDateLeft}%`,
+                  width: `${positions.issueDateWidth}%`,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontSize: `${positions.issueDateFontSize * (1537 / 650)}px`,
+                  letterSpacing: '1px',
+                  pointerEvents: 'none'
+                }}
+              >
+                {formatDateDDMMYYYY(formData.issueDate)}
+              </div>
+            </div>
           </div>
 
         </div>
