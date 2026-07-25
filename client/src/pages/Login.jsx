@@ -66,10 +66,6 @@ export default function Login({ onLogin }) {
           </button>
         </form>
         
-        <div style={{ marginTop: '2rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
-          <p>Admin: admin / admin123</p>
-          <p>Developer: dev / dev123</p>
-        </div>
       </div>
     </div>
   );
