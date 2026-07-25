@@ -112,9 +112,12 @@ app.post('/api/students', authenticateToken, async (req, res) => {
     res.status(201).json(student);
 
     // Trigger welcome email in the background
+    console.log(`Add Intern API: Intern created successfully. shouldSendEmail=${shouldSendEmail}, email=${student.email}`);
     if (shouldSendEmail && student.email) {
       const { sendWelcomeEmail } = require('./utils/mailer');
-      sendWelcomeEmail(student).catch(err => {
+      sendWelcomeEmail(student).then(res => {
+        console.log(`Welcome email result for ${student.email}:`, res);
+      }).catch(err => {
         console.error('Failed to send welcome email in background:', err);
       });
     }
