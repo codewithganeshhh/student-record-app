@@ -75,25 +75,27 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
 
   // Position settings (percentages) to align text precisely onto the template
   const [positions, setPositions] = useState({
-    nameTop: 52.0,
+    nameTop: 52.5,
     nameFontSize: 30,
     domainTop: 71.0,
-    domainLeft: 18.0,
-    domainWidth: 28.0,
+    domainLeft: 10.5,
+    domainWidth: 35.0,
     domainFontSize: 16,
     datesTop: 71.0,
-    datesLeft: 50.0,
-    datesWidth: 42.0,
+    datesLeft: 53.5,
+    datesWidth: 40.0,
     datesFontSize: 14,
     certNoTop: 83.5,
     certNoLeft: 45.0,
     certNoWidth: 22.0,
     certNoFontSize: 16,
     issueDateTop: 89.2,
-    issueDateLeft: 4.5,
-    issueDateWidth: 22.0,
+    issueDateLeft: 3.5,
+    issueDateWidth: 20.0,
     issueDateFontSize: 16
   });
+
+  const [activeTab, setActiveTab] = useState('name');
 
   const certificateRef = useRef(null);
 
@@ -224,31 +226,123 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
             <div className="form-card" style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', fontSize: '0.85rem' }}>
               <h4 style={{ marginBottom: '0.8rem', color: 'var(--primary)' }}>Align Text Overlays</h4>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <div>
-                  <strong>Student Name Top (%):</strong>
-                  <input type="range" min="40" max="65" step="0.1" value={positions.nameTop} onChange={(e) => handlePositionChange('nameTop', e.target.value)} style={{ width: '100%' }} />
-                </div>
-                <div>
-                  <strong>Name Font Size (px):</strong>
-                  <input type="range" min="20" max="50" step="1" value={positions.nameFontSize} onChange={(e) => handlePositionChange('nameFontSize', e.target.value)} style={{ width: '100%' }} />
-                </div>
-
-                <div>
-                  <strong>Domain Top (%):</strong>
-                  <input type="range" min="65" max="80" step="0.1" value={positions.domainTop} onChange={(e) => handlePositionChange('domainTop', e.target.value)} style={{ width: '100%' }} />
-                </div>
-
-                <div>
-                  <strong>Dates Left (%):</strong>
-                  <input type="range" min="40" max="65" step="0.1" value={positions.datesLeft} onChange={(e) => handlePositionChange('datesLeft', e.target.value)} style={{ width: '100%' }} />
-                </div>
-                
-                <div>
-                  <strong>Cert No Left (%):</strong>
-                  <input type="range" min="30" max="60" step="0.1" value={positions.certNoLeft} onChange={(e) => handlePositionChange('certNoLeft', e.target.value)} style={{ width: '100%' }} />
-                </div>
+              <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.8rem', flexWrap: 'wrap' }}>
+                {['name', 'domain', 'dates', 'certNo', 'issueDate'].map(tab => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveTab(tab)}
+                    style={{
+                      padding: '4px 8px',
+                      background: activeTab === tab ? 'var(--primary)' : 'rgba(255,255,255,0.08)',
+                      color: activeTab === tab ? '#fff' : 'var(--text-secondary)',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '0.75rem',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {tab === 'name' ? 'Name' : tab === 'domain' ? 'Domain' : tab === 'dates' ? 'Dates' : tab === 'certNo' ? 'Cert No' : 'Date'}
+                  </button>
+                ))}
               </div>
+
+              {activeTab === 'name' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div>
+                    <strong>Top (%):</strong>
+                    <input type="range" min="40" max="65" step="0.1" value={positions.nameTop} onChange={(e) => handlePositionChange('nameTop', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Font Size (px):</strong>
+                    <input type="range" min="20" max="50" step="1" value={positions.nameFontSize} onChange={(e) => handlePositionChange('nameFontSize', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'domain' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div>
+                    <strong>Top (%):</strong>
+                    <input type="range" min="60" max="85" step="0.1" value={positions.domainTop} onChange={(e) => handlePositionChange('domainTop', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Left (%):</strong>
+                    <input type="range" min="5" max="50" step="0.1" value={positions.domainLeft} onChange={(e) => handlePositionChange('domainLeft', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Width (%):</strong>
+                    <input type="range" min="10" max="60" step="0.1" value={positions.domainWidth} onChange={(e) => handlePositionChange('domainWidth', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Font Size (px):</strong>
+                    <input type="range" min="12" max="30" step="1" value={positions.domainFontSize} onChange={(e) => handlePositionChange('domainFontSize', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'dates' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div>
+                    <strong>Top (%):</strong>
+                    <input type="range" min="60" max="85" step="0.1" value={positions.datesTop} onChange={(e) => handlePositionChange('datesTop', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Left (%):</strong>
+                    <input type="range" min="40" max="80" step="0.1" value={positions.datesLeft} onChange={(e) => handlePositionChange('datesLeft', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Width (%):</strong>
+                    <input type="range" min="10" max="60" step="0.1" value={positions.datesWidth} onChange={(e) => handlePositionChange('datesWidth', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Font Size (px):</strong>
+                    <input type="range" min="10" max="25" step="1" value={positions.datesFontSize} onChange={(e) => handlePositionChange('datesFontSize', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'certNo' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div>
+                    <strong>Top (%):</strong>
+                    <input type="range" min="75" max="95" step="0.1" value={positions.certNoTop} onChange={(e) => handlePositionChange('certNoTop', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Left (%):</strong>
+                    <input type="range" min="20" max="70" step="0.1" value={positions.certNoLeft} onChange={(e) => handlePositionChange('certNoLeft', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Width (%):</strong>
+                    <input type="range" min="10" max="50" step="0.1" value={positions.certNoWidth} onChange={(e) => handlePositionChange('certNoWidth', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Font Size (px):</strong>
+                    <input type="range" min="12" max="25" step="1" value={positions.certNoFontSize} onChange={(e) => handlePositionChange('certNoFontSize', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'issueDate' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <div>
+                    <strong>Top (%):</strong>
+                    <input type="range" min="75" max="95" step="0.1" value={positions.issueDateTop} onChange={(e) => handlePositionChange('issueDateTop', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Left (%):</strong>
+                    <input type="range" min="1" max="40" step="0.1" value={positions.issueDateLeft} onChange={(e) => handlePositionChange('issueDateLeft', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Width (%):</strong>
+                    <input type="range" min="10" max="40" step="0.1" value={positions.issueDateWidth} onChange={(e) => handlePositionChange('issueDateWidth', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                  <div>
+                    <strong>Font Size (px):</strong>
+                    <input type="range" min="12" max="25" step="1" value={positions.issueDateFontSize} onChange={(e) => handlePositionChange('issueDateFontSize', e.target.value)} style={{ width: '100%' }} />
+                  </div>
+                </div>
+              )}
             </div>
             
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
@@ -287,7 +381,7 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
                 boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
                 borderRadius: '4px',
                 overflow: 'hidden',
-                color: '#000',
+                color: '#0f2d4a',
                 fontFamily: '"Montserrat", "Arial", sans-serif'
               }}
             >
