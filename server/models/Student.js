@@ -8,6 +8,12 @@ const studentSchema = new mongoose.Schema({
   joining_date: { type: Date, required: true },
   duration: { type: Number, required: true },
   status: { type: String, default: 'Active' },
+  certificate: {
+    certificateNo: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    issueDate: { type: Date }
+  },
   created_at: { type: Date, default: Date.now }
 });
 

@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
-import { Search, Plus, Edit, Trash2, FileSpreadsheet } from 'lucide-react';
+import { Search, Plus, Edit, Trash2, FileSpreadsheet, Award } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { exportToExcel } from '../utils/exportToExcel';
+import CertificateModal from '../components/CertificateModal';
 
 const PRESET_DOMAINS = [
   'MERN stack', 
@@ -26,6 +27,7 @@ export default function StudentDirectory({ user }) {
   const [editingStudent, setEditingStudent] = useState(null);
   const [selectedDomain, setSelectedDomain] = useState('MERN stack');
   const [customDomain, setCustomDomain] = useState('');
+  const [selectedStudentForCertificate, setSelectedStudentForCertificate] = useState(null);
 
   // Prefill state if converted from Enquiry navigation
   const [prefilledData, setPrefilledData] = useState(null);
@@ -205,7 +207,7 @@ export default function StudentDirectory({ user }) {
               <th>Joining Date</th>
               <th>Duration</th>
               <th>Status</th>
-              {user.role === 'ADMIN' && <th>Actions</th>}
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -229,18 +231,28 @@ export default function StudentDirectory({ user }) {
                     {student.status}
                   </span>
                 </td>
-                {user.role === 'ADMIN' && (
-                  <td>
-                    <div className="flex gap-2">
-                      <button className="btn btn-secondary" style={{ padding: '0.25rem 0.5rem' }} onClick={() => handleOpenEdit(student)}>
-                        <Edit size={16} />
-                      </button>
-                      <button className="btn btn-danger" style={{ padding: '0.25rem 0.5rem' }} onClick={() => handleDelete(student._id || student.id)}>
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </td>
-                )}
+                <td>
+                  <div className="flex gap-2">
+                    <button 
+                      className="btn btn-secondary" 
+                      style={{ padding: '0.25rem 0.5rem', background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }} 
+                      title="Generate Certificate"
+                      onClick={() => setSelectedStudentForCertificate(student)}
+                    >
+                      <Award size={16} />
+                    </button>
+                    {user.role === 'ADMIN' && (
+                      <>
+                        <button className="btn btn-secondary" style={{ padding: '0.25rem 0.5rem' }} onClick={() => handleOpenEdit(student)}>
+                          <Edit size={16} />
+                        </button>
+                        <button className="btn btn-danger" style={{ padding: '0.25rem 0.5rem' }} onClick={() => handleDelete(student._id || student.id)}>
+                          <Trash2 size={16} />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -330,6 +342,17 @@ export default function StudentDirectory({ user }) {
             </form>
           </div>
         </div>
+      )}
+
+      {selectedStudentForCertificate && (
+        <CertificateModal 
+          student={selectedStudentForCertificate} 
+          onClose={() => setSelectedStudentForCertificate(null)}
+          onUpdate={(updatedStudent) => {
+            setStudents(prev => prev.map(s => s.id === updatedStudent.id ? updatedStudent : s));
+            setSelectedStudentForCertificate(updatedStudent);
+          }}
+        />
       )}
     </div>
   );

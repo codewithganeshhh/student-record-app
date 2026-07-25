@@ -131,6 +131,24 @@ app.put('/api/students/:id', authenticateToken, async (req, res) => {
   }
 });
 
+// Update student certificate details (Admin & Developer)
+app.put('/api/students/:id/certificate', authenticateToken, async (req, res) => {
+  try {
+    const student = await Student.findByIdAndUpdate(
+      req.params.id,
+      { $set: { certificate: req.body } },
+      { new: true }
+    );
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+    res.json(student);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Delete a student (Admin only)
 app.delete('/api/students/:id', authenticateToken, async (req, res) => {
   if (req.user.role !== 'ADMIN') {
