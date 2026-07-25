@@ -138,7 +138,7 @@ export default function StudentDirectory({ user }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="page-header mb-6">
         <div>
           <h1 style={{ margin: 0 }}>Student Directory</h1>
           <p style={{ color: 'var(--text-secondary)', marginTop: '0.2rem', fontSize: '0.9rem' }}>
@@ -175,7 +175,7 @@ export default function StudentDirectory({ user }) {
       </div>
 
       <div className="glass-panel p-6 mb-6">
-        <div className="flex gap-4">
+        <div className="search-filter-bar">
           <div className="input-group" style={{ flex: 1, margin: 0, position: 'relative' }}>
             <Search size={18} style={{ position: 'absolute', left: '1rem', top: '0.85rem', color: 'var(--text-secondary)' }} />
             <input 

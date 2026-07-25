@@ -5,10 +5,12 @@ import Dashboard from './pages/Dashboard';
 import StudentDirectory from './pages/StudentDirectory';
 import Enquiries from './pages/Enquiries';
 import Sidebar from './components/Sidebar';
+import { Menu } from 'lucide-react';
 import './index.css';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -25,11 +27,49 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
-        <Sidebar user={user} onLogout={() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('role');
-          setUser(null);
-        }} />
+        {/* Mobile Top Navigation Bar */}
+        <header className="mobile-header">
+          <button 
+            onClick={() => setSidebarOpen(true)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              color: 'var(--text-primary)',
+              padding: '0.25rem'
+            }}
+            title="Open navigation menu"
+          >
+            <Menu size={24} />
+          </button>
+          <img 
+            src="/logo.png" 
+            alt="PaulTech Logo" 
+            style={{ height: '28px', width: 'auto', display: 'block' }} 
+          />
+          <div style={{ width: '32px' }}></div> {/* Spacer for alignment balance */}
+        </header>
+
+        {/* Sidebar Drawer Backdrop overlay */}
+        {sidebarOpen && (
+          <div 
+            className="sidebar-overlay" 
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        <Sidebar 
+          user={user} 
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          onLogout={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            setUser(null);
+          }} 
+        />
         <main className="main-content animate-fade-in">
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -44,3 +84,4 @@ function App() {
 }
 
 export default App;
+

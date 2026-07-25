@@ -99,7 +99,7 @@ export default function Dashboard({ user }) {
   return (
     <div style={{ fontFamily: 'Inter, Segoe UI, sans-serif' }}>
       {/* Top Header & Quick Actions */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+      <div className="page-header" style={{ marginBottom: '1.5rem' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 700, color: '#0f172a' }}>Dashboard</h1>
           <p style={{ color: '#64748b', marginTop: '0.2rem', fontSize: '0.85rem' }}>
@@ -208,7 +208,7 @@ export default function Dashboard({ user }) {
       </div>
 
       {/* Main 2-Column Compact Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
+      <div className="dashboard-grid">
         
         {/* Left Column: Interactive Domain Distribution Bar Chart */}
         <div style={{

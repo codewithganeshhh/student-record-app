@@ -175,7 +175,7 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '1.8rem', cursor: 'pointer', lineHeight: 1 }}>&times;</button>
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '1.5rem' }}>
+        <div className="certificate-grid">
           
           {/* Controls Panel */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
@@ -369,12 +369,13 @@ export default function CertificateModal({ student, onClose, onUpdate }) {
           </div>
 
           {/* Interactive Preview Panel */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', overflowX: 'auto', padding: '0.5rem 0' }}>
             <div 
               ref={certificateRef}
               style={{
                 position: 'relative',
                 width: '650px',
+                minWidth: '650px',
                 height: '504px',
                 backgroundImage: 'url("/certificate-template.png")',
                 backgroundSize: '100% 100%',

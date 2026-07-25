@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, HelpCircle, FileSpreadsheet, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, HelpCircle, FileSpreadsheet, LogOut, X } from 'lucide-react';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { exportToExcel } from '../utils/exportToExcel';
 
-export default function Sidebar({ user, onLogout }) {
+export default function Sidebar({ user, onLogout, isOpen, onClose }) {
   const location = useLocation();
   
   const isActive = (path) => location.pathname === path;
@@ -33,16 +33,16 @@ export default function Sidebar({ user, onLogout }) {
   };
 
   return (
-    <div style={{ 
-      width: '250px', 
-      background: '#ffffff', 
-      borderRight: '1px solid #e2e8f0',
-      boxShadow: '4px 0 20px rgba(0, 0, 0, 0.03)',
-      padding: '2rem', 
-      display: 'flex', 
-      flexDirection: 'column',
-      zIndex: 10
-    }}>
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+      {/* Mobile Close Button */}
+      <button 
+        className="sidebar-close-btn" 
+        onClick={onClose}
+        title="Close navigation menu"
+      >
+        <X size={20} />
+      </button>
+
       <div style={{ marginBottom: '3rem' }}>
         <img 
           src="/logo.png" 
@@ -61,6 +61,7 @@ export default function Sidebar({ user, onLogout }) {
       <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         <Link 
           to="/dashboard" 
+          onClick={onClose}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', 
             borderRadius: 'var(--radius-md)',
@@ -76,6 +77,7 @@ export default function Sidebar({ user, onLogout }) {
         </Link>
         <Link 
           to="/students" 
+          onClick={onClose}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', 
             borderRadius: 'var(--radius-md)',
@@ -91,6 +93,7 @@ export default function Sidebar({ user, onLogout }) {
         </Link>
         <Link 
           to="/enquiries" 
+          onClick={onClose}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', 
             borderRadius: 'var(--radius-md)',
@@ -106,7 +109,10 @@ export default function Sidebar({ user, onLogout }) {
         </Link>
 
         <button 
-          onClick={handleExportAll}
+          onClick={() => {
+            handleExportAll();
+            onClose();
+          }}
           style={{ 
             display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', 
             borderRadius: 'var(--radius-md)',
@@ -133,3 +139,4 @@ export default function Sidebar({ user, onLogout }) {
     </div>
   );
 }
+
