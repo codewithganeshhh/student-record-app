@@ -49,7 +49,10 @@ const sendWelcomeEmail = async (student) => {
     auth: {
       user: user,
       pass: pass
-    }
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,   // 10 seconds
+    socketTimeout: 10000      // 10 seconds
   });
 
   const formattedDate = formatDateString(student.joining_date);
