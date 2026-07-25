@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 // Helper to format date as "1st May 2025"
@@ -30,35 +31,9 @@ const formatDuration = (months) => {
   return m < 10 ? `0${m}` : `${m}`;
 };
 
-const sendWelcomeEmail = async (student) => {
-  // Check if email config is provided in env
-  const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
-  const port = parseInt(process.env.EMAIL_PORT || '587');
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
-
-  if (!user || !pass) {
-    console.warn('Mailer Warning: EMAIL_USER or EMAIL_PASS environment variables are not configured. Welcome email was not sent.');
-    return { success: false, error: 'Email configuration missing in backend env' };
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: host,
-    port: port,
-    secure: port === 465, // true for 465, false for other ports
-    auth: {
-      user: user,
-      pass: pass
-    },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 10000,   // 10 seconds
-    socketTimeout: 10000      // 10 seconds
-  });
-
-  const formattedDate = formatDateString(student.joining_date);
-  const formattedDuration = formatDuration(student.duration);
-
-  const htmlContent = `
+// Helper to generate the common HTML template
+const getHtmlContent = (studentName, formattedDate, formattedDuration) => {
+  return `
   <!DOCTYPE html>
   <html>
   <head>
@@ -105,7 +80,7 @@ const sendWelcomeEmail = async (student) => {
   </head>
   <body>
     <div class="container">
-      <p>Dear ${student.name},</p>
+      <p>Dear ${studentName},</p>
       
       <p>I hope this email finds you well. We are excited to welcome you at <strong>PaulTech Software Services Pvt Ltd.</strong> as an Intern. Your skills and enthusiasm will be a valuable addition to our team, and we look forward to working with you.</p>
       
@@ -135,6 +110,104 @@ const sendWelcomeEmail = async (student) => {
   </body>
   </html>
   `;
+};
+
+const sendWelcomeEmail = async (student) => {
+  const brevoApiKey = process.env.BREVO_API_KEY;
+  const user = process.env.EMAIL_USER;
+
+  if (brevoApiKey) {
+    console.log(`Mailer: Detected BREVO_API_KEY. Sending email via Brevo HTTP API...`);
+    try {
+      const logoPath = path.join(__dirname, '..', 'logo.png');
+      let logoBase64 = '';
+      try {
+        logoBase64 = fs.readFileSync(logoPath).toString('base64');
+      } catch (err) {
+        console.error('Failed to read logo.png for Brevo attachment:', err);
+      }
+
+      const formattedDate = formatDateString(student.joining_date);
+      const formattedDuration = formatDuration(student.duration);
+      const htmlContent = getHtmlContent(student.name, formattedDate, formattedDuration);
+
+      const senderEmail = user || 'ganesh.bca2303082@nsuniv.ac.in';
+
+      const body = {
+        sender: {
+          name: "Daljeet Paul",
+          email: senderEmail
+        },
+        to: [
+          {
+            email: student.email,
+            name: student.name
+          }
+        ],
+        subject: 'Welcome to PAULTECH SOFTWARE SERVICES (OPC) PVT LTD.',
+        htmlContent: htmlContent
+      };
+
+      if (logoBase64) {
+        body.attachment = [
+          {
+            content: logoBase64,
+            name: 'logo.png',
+            cid: 'paultech_logo'
+          }
+        ];
+      }
+
+      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': brevoApiKey,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      const resJson = await response.json();
+      if (!response.ok) {
+        throw new Error(resJson.message || `HTTP error ${response.status}`);
+      }
+
+      console.log(`Welcome email successfully sent via Brevo HTTP API to ${student.email}: ${resJson.messageId}`);
+      return { success: true, messageId: resJson.messageId };
+    } catch (error) {
+      console.error(`Mailer Error: Failed to send welcome email via Brevo to ${student.email}:`, error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Fallback to SMTP
+  console.log(`Mailer: No BREVO_API_KEY. Falling back to SMTP connection...`);
+  const host = process.env.EMAIL_HOST || 'smtp.gmail.com';
+  const port = parseInt(process.env.EMAIL_PORT || '587');
+  const pass = process.env.EMAIL_PASS;
+
+  if (!user || !pass) {
+    console.warn('Mailer Warning: EMAIL_USER or EMAIL_PASS environment variables are not configured. Welcome email was not sent.');
+    return { success: false, error: 'Email configuration missing in backend env' };
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: host,
+    port: port,
+    secure: port === 465,
+    auth: {
+      user: user,
+      pass: pass
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
+  });
+
+  const formattedDate = formatDateString(student.joining_date);
+  const formattedDuration = formatDuration(student.duration);
+  const htmlContent = getHtmlContent(student.name, formattedDate, formattedDuration);
 
   const mailOptions = {
     from: `"Daljeet Paul" <${user}>`,
@@ -145,17 +218,17 @@ const sendWelcomeEmail = async (student) => {
       {
         filename: 'logo.png',
         path: path.join(__dirname, '..', 'logo.png'),
-        cid: 'paultech_logo' // matches the cid source in img tag
+        cid: 'paultech_logo'
       }
     ]
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(`Welcome email successfully sent to ${student.email}: ${info.messageId}`);
+    console.log(`Welcome email successfully sent via SMTP to ${student.email}: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error(`Mailer Error: Failed to send welcome email to ${student.email}:`, error);
+    console.error(`Mailer Error: Failed to send welcome email via SMTP to ${student.email}:`, error);
     return { success: false, error: error.message };
   }
 };
