@@ -105,8 +105,19 @@ app.post('/api/students', authenticateToken, async (req, res) => {
   }
   
   try {
-    const student = await Student.create(req.body);
+    const { sendWelcomeEmail: shouldSendEmail, ...studentData } = req.body;
+    const student = await Student.create(studentData);
+    
+    // Respond back to frontend immediately
     res.status(201).json(student);
+
+    // Trigger welcome email in the background
+    if (shouldSendEmail && student.email) {
+      const { sendWelcomeEmail } = require('./utils/mailer');
+      sendWelcomeEmail(student).catch(err => {
+        console.error('Failed to send welcome email in background:', err);
+      });
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });

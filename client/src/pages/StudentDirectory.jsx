@@ -117,6 +117,7 @@ export default function StudentDirectory({ user }) {
       data.domain = selectedDomain;
     }
     delete data.custom_domain;
+    data.sendWelcomeEmail = data.sendWelcomeEmail === 'on';
 
     try {
       if (editingStudent) {
@@ -332,6 +333,21 @@ export default function StudentDirectory({ user }) {
                     <option value="Active" style={{ background: 'var(--bg-secondary)' }}>Active</option>
                     <option value="Completed" style={{ background: 'var(--bg-secondary)' }}>Completed</option>
                   </select>
+                </div>
+              )}
+
+              {!editingStudent && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.8rem' }}>
+                  <input 
+                    type="checkbox" 
+                    id="sendWelcomeEmail" 
+                    name="sendWelcomeEmail" 
+                    defaultChecked={true}
+                    style={{ width: 'auto', margin: 0, cursor: 'pointer' }}
+                  />
+                  <label htmlFor="sendWelcomeEmail" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', userSelect: 'none' }}>
+                    Send welcome email with internship details
+                  </label>
                 </div>
               )}
               
