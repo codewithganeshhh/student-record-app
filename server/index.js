@@ -13,6 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root Health Check Route
+app.get('/', (req, res) => {
+  res.json({ message: 'Student Record App API is running!' });
+});
+
+
 // Connect to MongoDB
 connectDB();
 
