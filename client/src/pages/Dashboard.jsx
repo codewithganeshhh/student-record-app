@@ -103,7 +103,7 @@ export default function Dashboard({ user }) {
         <div>
           <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 700, color: '#0f172a' }}>Dashboard</h1>
           <p style={{ color: '#64748b', marginTop: '0.2rem', fontSize: '0.85rem' }}>
-            Welcome back, {user.role === 'ADMIN' ? 'Administrator' : 'Developer'}
+            Welcome back, {user.role === 'ADMIN' ? 'Mrs. Daljeet Paul' : 'Developer'}
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>

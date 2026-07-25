@@ -53,8 +53,8 @@ export default function Sidebar({ user, onLogout }) {
             display: 'block'
           }} 
         />
-        <div className="badge badge-domain" style={{ marginTop: '0.75rem' }}>
-          {user.role}
+        <div className="badge badge-domain" style={{ marginTop: '0.75rem', textTransform: 'none' }}>
+          {user.role === 'ADMIN' ? 'Mrs. Daljeet Paul' : user.role}
         </div>
       </div>
       
