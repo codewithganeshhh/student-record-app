@@ -11,6 +11,7 @@ import './index.css';
 function App() {
   const [user, setUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -19,6 +20,16 @@ function App() {
       setUser({ token, role });
     }
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
 
   if (!user) {
     return <Login onLogin={setUser} />;
@@ -64,6 +75,8 @@ function App() {
           user={user} 
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
+          darkMode={darkMode}
+          onToggleDarkMode={() => setDarkMode(prev => !prev)}
           onLogout={() => {
             localStorage.removeItem('token');
             localStorage.removeItem('role');

@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, HelpCircle, FileSpreadsheet, LogOut, X } from 'lucide-react';
+import { LayoutDashboard, Users, HelpCircle, FileSpreadsheet, LogOut, X, Sun, Moon } from 'lucide-react';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { exportToExcel } from '../utils/exportToExcel';
 
-export default function Sidebar({ user, onLogout, isOpen, onClose }) {
+export default function Sidebar({ user, onLogout, isOpen, onClose, darkMode, onToggleDarkMode }) {
   const location = useLocation();
   
   const isActive = (path) => location.pathname === path;
@@ -132,7 +132,16 @@ export default function Sidebar({ user, onLogout, isOpen, onClose }) {
         </button>
       </nav>
 
-      <button className="btn btn-secondary" onClick={onLogout} style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+      <button 
+        className="theme-toggle-btn" 
+        onClick={onToggleDarkMode}
+        title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
+
+      <button className="btn btn-secondary" onClick={onLogout} style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', width: '100%', marginTop: '0.25rem' }}>
         <LogOut size={18} />
         Logout
       </button>

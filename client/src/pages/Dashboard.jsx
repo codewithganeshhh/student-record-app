@@ -101,8 +101,8 @@ export default function Dashboard({ user }) {
       {/* Top Header & Quick Actions */}
       <div className="page-header" style={{ marginBottom: '1.5rem' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 700, color: '#0f172a' }}>Dashboard</h1>
-          <p style={{ color: '#64748b', marginTop: '0.2rem', fontSize: '0.85rem' }}>
+          <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)' }}>Dashboard</h1>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.2rem', fontSize: '0.85rem' }}>
             Welcome back, {user.role === 'ADMIN' ? 'Mrs. Daljeet Paul' : 'Developer'}
           </p>
         </div>
@@ -130,10 +130,10 @@ export default function Dashboard({ user }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
         
         <div style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           borderRadius: '12px',
           padding: '1rem 1.25rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           alignItems: 'center',
@@ -143,16 +143,16 @@ export default function Dashboard({ user }) {
             <Users size={22} />
           </div>
           <div>
-            <span style={{ color: '#64748b', fontSize: '0.8rem', fontWeight: 500 }}>Total Interns</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>{stats.totalStudents}</div>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>Total Interns</span>
+            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>{stats.totalStudents}</div>
           </div>
         </div>
 
         <div style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           borderRadius: '12px',
           padding: '1rem 1.25rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           alignItems: 'center',
@@ -162,16 +162,16 @@ export default function Dashboard({ user }) {
             <Activity size={22} />
           </div>
           <div>
-            <span style={{ color: '#64748b', fontSize: '0.8rem', fontWeight: 500 }}>Active Interns</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>{stats.activeStudents}</div>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>Active Interns</span>
+            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>{stats.activeStudents}</div>
           </div>
         </div>
 
         <div style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           borderRadius: '12px',
           padding: '1rem 1.25rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           alignItems: 'center',
@@ -181,16 +181,16 @@ export default function Dashboard({ user }) {
             <HelpCircle size={22} />
           </div>
           <div>
-            <span style={{ color: '#64748b', fontSize: '0.8rem', fontWeight: 500 }}>Enquiries</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>{stats.totalEnquiries}</div>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>Enquiries</span>
+            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>{stats.totalEnquiries}</div>
           </div>
         </div>
 
         <div style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           borderRadius: '12px',
           padding: '1rem 1.25rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           alignItems: 'center',
@@ -200,8 +200,8 @@ export default function Dashboard({ user }) {
             <UserCheck size={22} />
           </div>
           <div>
-            <span style={{ color: '#64748b', fontSize: '0.8rem', fontWeight: 500 }}>Conversion Rate</span>
-            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>{stats.conversionRate}%</div>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}>Conversion Rate</span>
+            <div style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>{stats.conversionRate}%</div>
           </div>
         </div>
 
@@ -212,20 +212,20 @@ export default function Dashboard({ user }) {
         
         {/* Left Column: Interactive Domain Distribution Bar Chart */}
         <div style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           borderRadius: '14px',
           padding: '1.25rem 1.5rem',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0f172a', fontWeight: 600 }}>Domain Distribution</h3>
-              <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Click any domain bar to inspect registered records</span>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: 600 }}>Domain Distribution</h3>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Click any domain bar to inspect registered records</span>
             </div>
             
             {/* Interactive Tab Switcher */}
-            <div style={{ display: 'flex', background: '#f1f5f9', padding: '0.2rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+            <div style={{ display: 'flex', background: 'var(--bg-primary)', padding: '0.2rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
               <button 
                 onClick={() => setActiveTab('interns')}
                 style={{
@@ -234,8 +234,8 @@ export default function Dashboard({ user }) {
                   fontWeight: 600,
                   borderRadius: '6px',
                   border: 'none',
-                  background: activeTab === 'interns' ? '#ffffff' : 'transparent',
-                  color: activeTab === 'interns' ? '#0078d4' : '#64748b',
+                  background: activeTab === 'interns' ? 'var(--bg-card)' : 'transparent',
+                  color: activeTab === 'interns' ? 'var(--accent-primary)' : 'var(--text-secondary)',
                   boxShadow: activeTab === 'interns' ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
                   cursor: 'pointer',
                   transition: 'all 0.2s'
@@ -251,8 +251,8 @@ export default function Dashboard({ user }) {
                   fontWeight: 600,
                   borderRadius: '6px',
                   border: 'none',
-                  background: activeTab === 'enquiries' ? '#ffffff' : 'transparent',
-                  color: activeTab === 'enquiries' ? '#0078d4' : '#64748b',
+                  background: activeTab === 'enquiries' ? 'var(--bg-card)' : 'transparent',
+                  color: activeTab === 'enquiries' ? 'var(--accent-primary)' : 'var(--text-secondary)',
                   boxShadow: activeTab === 'enquiries' ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
                   cursor: 'pointer',
                   transition: 'all 0.2s'
@@ -277,17 +277,17 @@ export default function Dashboard({ user }) {
                   style={{
                     padding: '0.4rem 0.6rem',
                     borderRadius: '6px',
-                    background: isHovered ? '#f1f5f9' : 'transparent',
+                    background: isHovered ? 'var(--bg-primary)' : 'transparent',
                     transition: 'background 0.2s ease',
                     cursor: 'pointer'
                   }}
                   title="Click to view details"
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem', fontSize: '0.8rem' }}>
-                    <span style={{ color: isHovered ? '#0078d4' : '#334155', fontWeight: isHovered ? 600 : 500, transition: 'color 0.2s' }}>
+                    <span style={{ color: isHovered ? 'var(--accent-primary)' : 'var(--text-primary)', fontWeight: isHovered ? 600 : 500, transition: 'color 0.2s' }}>
                       {item.name}
                     </span>
-                    <span style={{ color: '#64748b', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>
                       {item.count} {activeTab === 'interns' ? (item.count === 1 ? 'Intern' : 'Interns') : (item.count === 1 ? 'Enquiry' : 'Enquiries')}
                     </span>
                   </div>
@@ -295,7 +295,7 @@ export default function Dashboard({ user }) {
                   <div style={{ 
                     height: '7px', 
                     width: '100%', 
-                    background: '#e2e8f0', 
+                    background: 'var(--border-color)', 
                     borderRadius: '4px',
                     overflow: 'hidden'
                   }}>
@@ -319,33 +319,33 @@ export default function Dashboard({ user }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           
           <div style={{
-            background: '#ffffff',
+            background: 'var(--bg-card)',
             borderRadius: '14px',
             padding: '1.25rem',
-            border: '1px solid #e2e8f0',
+            border: '1px solid var(--border-color)',
             boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#0f172a', fontWeight: 600 }}>Recent Enquiries</h4>
+              <h4 style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 600 }}>Recent Enquiries</h4>
               <button 
                 onClick={() => navigate('/enquiries')}
-                style={{ background: 'none', border: 'none', color: '#0078d4', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               >
                 View all <ArrowUpRight size={14} />
               </button>
             </div>
 
             {enquiries.length === 0 ? (
-              <div style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center', padding: '1rem 0' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', padding: '1rem 0' }}>
                 No enquiries recorded yet.
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {enquiries.slice(0, 4).map(enquiry => (
-                  <div key={enquiry._id || enquiry.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', paddingBottom: '0.5rem', borderBottom: '1px solid #f1f5f9' }}>
+                  <div key={enquiry._id || enquiry.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
                     <div>
-                      <div style={{ fontWeight: 600, color: '#1e293b' }}>{enquiry.name}</div>
-                      <div style={{ color: '#64748b', fontSize: '0.7rem' }}>{enquiry.domain}</div>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{enquiry.name}</div>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '0.7rem' }}>{enquiry.domain}</div>
                     </div>
                     <span className="badge" style={{
                       fontSize: '0.65rem',
@@ -367,8 +367,8 @@ export default function Dashboard({ user }) {
             border: '1px solid rgba(0, 120, 212, 0.2)',
             boxShadow: '0 2px 10px rgba(0, 120, 212, 0.05)'
           }}>
-            <h4 style={{ margin: 0, fontSize: '0.9rem', color: '#0078d4', fontWeight: 600, marginBottom: '0.4rem' }}>Interactive Feature</h4>
-            <p style={{ margin: 0, fontSize: '0.8rem', color: '#475569', lineHeight: 1.4 }}>
+            <h4 style={{ margin: 0, fontSize: '0.9rem', color: 'var(--accent-primary)', fontWeight: 600, marginBottom: '0.4rem' }}>Interactive Feature</h4>
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
               Use the <b>Interns / Enquiries</b> toggle above the chart, or click directly on any domain row to inspect students!
             </p>
           </div>
@@ -384,17 +384,17 @@ export default function Dashboard({ user }) {
           background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50
         }}>
-          <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', width: '100%', maxWidth: '500px', boxShadow: '0 10px 40px rgba(0,0,0,0.15)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', width: '100%', maxWidth: '500px', boxShadow: '0 10px 40px rgba(0,0,0,0.15)', border: '1px solid var(--border-color)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0f172a' }}>{selectedDomainModal}</h3>
-                <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{selectedDomainModal}</h3>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                   {activeTab === 'interns' ? 'Enrolled Interns' : 'Student Enquiries'}
                 </span>
               </div>
               <button 
                 onClick={() => setSelectedDomainModal(null)} 
-                style={{ background: '#f1f5f9', border: 'none', borderRadius: '50%', padding: '0.4rem', cursor: 'pointer', color: '#64748b' }}
+                style={{ background: 'var(--bg-primary)', border: 'none', borderRadius: '50%', padding: '0.4rem', cursor: 'pointer', color: 'var(--text-secondary)' }}
               >
                 <X size={18} />
               </button>
@@ -402,16 +402,16 @@ export default function Dashboard({ user }) {
 
             <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
               {selectedDomainItems.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8', fontSize: '0.85rem' }}>
+                <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
                   No records found under {selectedDomainModal}.
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {selectedDomainItems.map((item) => (
-                    <div key={item._id || item.id} style={{ padding: '0.75rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div key={item._id || item.id} style={{ padding: '0.75rem', background: 'var(--bg-primary)', borderRadius: '8px', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div>
-                        <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#0f172a' }}>{item.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{item.email || item.phone || 'No contact'}</div>
+                        <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-primary)' }}>{item.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{item.email || item.phone || 'No contact'}</div>
                       </div>
                       <span className="badge badge-active" style={{ fontSize: '0.7rem' }}>
                         {item.status || 'Enrolled'}
